@@ -1,0 +1,134 @@
+.orderbook-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 4px 8px;
+  font-size: 11px;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.orderbook-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  position: relative;
+  cursor: pointer;
+}
+
+.orderbook-row:hover {
+  background: var(--bg-hover);
+}
+
+.orderbook-row .depth-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.orderbook-row.bid .depth-bar {
+  background: var(--accent-buy);
+}
+
+.orderbook-row.ask .depth-bar {
+  background: var(--accent-sell);
+}
+
+.orderbook-row .price {
+  position: relative;
+  z-index: 1;
+}
+
+.orderbook-row.bid .price {
+  color: var(--accent-buy);
+}
+
+.orderbook-row.ask .price {
+  color: var(--accent-sell);
+}
+
+.orderbook-row .amount,
+.orderbook-row .total {
+  position: relative;
+  z-index: 1;
+  text-align: right;
+  color: var(--text-primary);
+}
+
+.orderbook-spread {
+  padding: 6px 8px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-tertiary);
+}
+
+.orderbook-spread .arrow {
+  font-size: 10px;
+  margin-left: 4px;
+}
+
+.orderbook-spread.up {
+  color: var(--accent-buy);
+}
+
+.orderbook-spread.down {
+  color: var(--accent-sell);
+}
+
+.orderbook-depth-bar {
+  display: flex;
+  height: 4px;
+  margin: 4px 8px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.orderbook-depth-bar .buy-depth {
+  background: var(--accent-buy);
+  transition: width 0.3s;
+}
+
+.orderbook-depth-bar .sell-depth {
+  background: var(--accent-sell);
+  transition: width 0.3s;
+}
+
+.orderbook-view-toggle {
+  display: flex;
+  gap: 4px;
+}
+
+.orderbook-view-toggle button {
+  background: none;
+  color: var(--text-muted);
+  padding: 2px 4px;
+  font-size: 10px;
+}
+
+.orderbook-view-toggle button.active {
+  color: var(--accent-yellow);
+}
+
+.order-marker {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-yellow);
+  flex-shrink: 0;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.orderbook-row.has-order .price {
+  display: inline-flex;
+  align-items: center;
+}

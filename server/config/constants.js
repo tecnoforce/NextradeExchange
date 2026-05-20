@@ -1,0 +1,88 @@
+const FALLBACK_PAIRS = [
+  'BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'SOL/USDT',
+  'XRP/USDT', 'ADA/USDT', 'DOGE/USDT', 'AVAX/USDT',
+  'DOT/USDT', 'MATIC/USDT', 'LINK/USDT', 'UNI/USDT',
+  'ATOM/USDT', 'LTC/USDT', 'NEAR/USDT', 'APT/USDT',
+  'ARB/USDT', 'OP/USDT', 'FIL/USDT', 'INJ/USDT',
+];
+
+const QUOTE_CURRENCIES = ['USDT', 'BTC', 'ETH', 'BNB'];
+
+const PAIR_ALLOCATION = { USDT: 40, BTC: 30, ETH: 15, BNB: 15 };
+
+const ACTIVE_PAIRS_COUNT = parseInt(process.env.ACTIVE_PAIRS_COUNT) || 100;
+
+const ORDERBOOK_PAIRS_PER_CYCLE = parseInt(process.env.ORDERBOOK_PAIRS_PER_CYCLE) || 20;
+
+const TRADES_PAIRS_PER_CYCLE = parseInt(process.env.TRADES_PAIRS_PER_CYCLE) || 20;
+
+const TIMEFRAMES = ['1s', '1m', '3m', '5m', '15m', '30m', '1h', '2h', '4h', '6h', '8h', '12h', '1d', '3d', '1w', '1M'];
+
+const DEFAULT_TIMEFRAME = '1h';
+
+const CHART_TIMEFRAMES = ['1s', '1m', '5m', '15m', '1h', '4h', '1d', '1w'];
+
+const ORDERBOOK_DEPTH = 20;
+
+const RECENT_TRADES_LIMIT = 50;
+
+const MIN_ORDER_USDT = parseFloat(process.env.MIN_ORDER_USDT) || 5;
+
+const MAX_ORDERS_PER_USER = parseInt(process.env.MAX_ORDERS_PER_USER) || 50;
+
+const MAKER_FEE = parseFloat(process.env.MAKER_FEE) || 0.001;
+
+const TAKER_FEE = parseFloat(process.env.TAKER_FEE) || 0.001;
+
+const DECIMAL_PLACES = {
+  price: 8,
+  amount: 8,
+  balance: 8,
+};
+
+const DEFAULT_BALANCES = {
+  USDT: 10000,
+  BTC: 1,
+  ETH: 5,
+  BNB: 10,
+  SOL: 50,
+  XRP: 1000,
+  ADA: 2000,
+  DOGE: 10000,
+  AVAX: 20,
+  DOT: 50,
+  MATIC: 500,
+  LINK: 100,
+  UNI: 100,
+  ATOM: 100,
+  LTC: 10,
+  NEAR: 200,
+  APT: 50,
+  ARB: 500,
+  OP: 500,
+  FIL: 100,
+  INJ: 100,
+};
+
+const DEFAULT_USER_ID = '00000000-0000-0000-0000-000000000001';
+
+module.exports = {
+  FALLBACK_PAIRS,
+  QUOTE_CURRENCIES,
+  PAIR_ALLOCATION,
+  ACTIVE_PAIRS_COUNT,
+  ORDERBOOK_PAIRS_PER_CYCLE,
+  TRADES_PAIRS_PER_CYCLE,
+  TIMEFRAMES,
+  DEFAULT_TIMEFRAME,
+  CHART_TIMEFRAMES,
+  ORDERBOOK_DEPTH,
+  RECENT_TRADES_LIMIT,
+  MIN_ORDER_USDT,
+  MAX_ORDERS_PER_USER,
+  MAKER_FEE,
+  TAKER_FEE,
+  DECIMAL_PLACES,
+  DEFAULT_BALANCES,
+  DEFAULT_USER_ID,
+};

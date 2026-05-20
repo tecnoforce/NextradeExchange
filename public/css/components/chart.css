@@ -1,0 +1,98 @@
+.chart-container {
+  flex: 1;
+  position: relative;
+  min-height: 0;
+}
+
+.chart-toolbar {
+  display: flex;
+  align-items: center;
+  padding: 4px 12px;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.chart-toolbar .timeframes {
+  display: flex;
+  gap: 2px;
+}
+
+.chart-toolbar .timeframes button {
+  background: none;
+  color: var(--text-secondary);
+  padding: 4px 8px;
+  font-size: 11px;
+  border-radius: 2px;
+}
+
+.chart-toolbar .timeframes button:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
+.chart-toolbar .timeframes button.active {
+  color: var(--accent-yellow);
+  background: var(--bg-tertiary);
+}
+
+.chart-toolbar .indicators {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+  font-size: 11px;
+}
+
+.chart-toolbar .indicators .ma {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.chart-toolbar .indicators .ma .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.chart-toolbar .indicators .ma.ma7 .dot { background: var(--accent-yellow); }
+.chart-toolbar .indicators .ma.ma25 .dot { background: #a66bff; }
+.chart-toolbar .indicators .ma.ma99 .dot { background: #6ba0ff; }
+
+.chart-toolbar .chart-types {
+  display: flex;
+  gap: 4px;
+}
+
+.chart-toolbar .chart-types button {
+  background: none;
+  color: var(--text-secondary);
+  padding: 4px 8px;
+  font-size: 11px;
+}
+
+.chart-toolbar .chart-types button.active {
+  color: var(--accent-yellow);
+}
+
+#chart {
+  width: 100%;
+  height: 100%;
+}
+
+.chart-ohlc {
+  display: flex;
+  gap: 16px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.chart-ohlc .label {
+  color: var(--text-muted);
+}
+
+.chart-ohlc .value.up { color: var(--accent-buy); }
+.chart-ohlc .value.down { color: var(--accent-sell); }

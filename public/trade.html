@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexTrade - Trading</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/trade.css">
+  <link rel="stylesheet" href="/css/components/orderbook.css">
+  <link rel="stylesheet" href="/css/components/chart.css">
+  <link rel="stylesheet" href="/css/components/orderform.css">
+  <link rel="stylesheet" href="/css/components/ticker.css">
+  <script src="https://unpkg.com/lightweight-charts@5.2.0/dist/lightweight-charts.standalone.production.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <div class="trade-layout">
+    <header class="trade-header">
+      <div class="logo">NexTrade</div>
+      <div class="pair-selector">
+        <span class="icon">₿</span>
+        <span id="header-pair">BTC/USDT</span>
+      </div>
+      <div class="header-ticker">
+        <span class="price-main" id="header-price">76,442.00</span>
+        <span class="price-usd" id="header-change">-1,615.65 -2.07%</span>
+      </div>
+      <div class="ticker-stats">
+        <div class="stat">
+          <span class="stat-label">Alto 24h</span>
+          <span class="stat-value" id="header-high">78,485.36</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Bajo 24h</span>
+          <span class="stat-value" id="header-low">76,051.00</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Volumen 24h (BTC)</span>
+          <span class="stat-value" id="header-volume">18,952.91</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Volumen 24h (USDT)</span>
+          <span class="stat-value" id="header-quote-volume">1,459,434,705.70</span>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="/trade.html" class="active">Trading</a>
+        <a href="/wallet.html">Billetera</a>
+        <a href="/orders.html">Órdenes</a>
+      </nav>
+      <div class="user-menu">
+        <span class="balance" id="user-balance">Cargando...</span>
+      </div>
+    </header>
+
+    <div class="trade-body">
+      <div class="trade-main">
+        <div class="panel orderbook-panel">
+          <div class="panel-header">
+            <span>Libro de pedidos</span>
+            <div class="orderbook-view-toggle">
+              <button class="active">0.01</button>
+            </div>
+          </div>
+          <div class="panel-content" id="orderbook-content"></div>
+        </div>
+
+        <div class="panel chart-panel">
+          <div class="chart-toolbar">
+            <div class="timeframes">
+              <button data-tf="1s">1s</button>
+              <button data-tf="1m">1m</button>
+              <button data-tf="5m">5m</button>
+              <button data-tf="15m">15m</button>
+              <button data-tf="1h" class="active">1H</button>
+              <button data-tf="4h">4H</button>
+              <button data-tf="1d">1D</button>
+              <button data-tf="1w">1W</button>
+            </div>
+            <div class="indicators">
+              <span class="ma ma7"><span class="dot"></span>MA(7)</span>
+              <span class="ma ma25"><span class="dot"></span>MA(25)</span>
+              <span class="ma ma99"><span class="dot"></span>MA(99)</span>
+            </div>
+          </div>
+          <div class="chart-ohlc" id="chart-ohlc">
+            <span><span class="label">O</span> <span class="value" id="ohlc-open">-</span></span>
+            <span><span class="label">H</span> <span class="value" id="ohlc-high">-</span></span>
+            <span><span class="label">L</span> <span class="value" id="ohlc-low">-</span></span>
+            <span><span class="label">C</span> <span class="value" id="ohlc-close">-</span></span>
+            <span><span class="label">Vol</span> <span class="value" id="ohlc-vol">-</span></span>
+          </div>
+          <div class="chart-container" id="chart"></div>
+        </div>
+
+        <div class="panel orderform-panel">
+          <div class="orderform-tabs">
+            <button class="tab active" data-type="limit">Límite</button>
+            <button class="tab" data-type="market">Mercado</button>
+            <button class="tab" data-type="stop_limit">Stop-Limit</button>
+          </div>
+          <div class="orderform-content">
+            <div class="orderform-side-tabs">
+              <button class="side-tab buy active" data-side="buy">Comprar</button>
+              <button class="side-tab sell" data-side="sell">Vender</button>
+            </div>
+
+            <div class="orderform-group" id="price-group">
+              <label>Precio</label>
+              <div class="input-wrapper">
+                <input type="number" id="order-price" placeholder="Precio" step="any">
+                <span class="unit">USDT</span>
+              </div>
+            </div>
+
+            <div class="orderform-group" id="stop-price-group" style="display:none;">
+              <label>Stop Price</label>
+              <div class="input-wrapper">
+                <input type="number" id="order-stop-price" placeholder="Stop Price" step="any">
+                <span class="unit">USDT</span>
+              </div>
+            </div>
+
+            <div class="orderform-group">
+              <label>Cantidad</label>
+              <div class="input-wrapper">
+                <input type="number" id="order-amount" placeholder="Cantidad" step="any">
+                <span class="unit" id="amount-unit">BTC</span>
+              </div>
+            </div>
+
+            <div class="orderform-slider">
+              <button data-percent="25">25%</button>
+              <button data-percent="50">50%</button>
+              <button data-percent="75">75%</button>
+              <button data-percent="100">100%</button>
+            </div>
+
+            <div class="orderform-group">
+              <label>Total</label>
+              <div class="input-wrapper">
+                <input type="number" id="order-total" placeholder="Total" step="any">
+                <span class="unit">USDT</span>
+              </div>
+            </div>
+
+            <div class="orderform-balance">
+              <span>Disponible</span>
+              <span class="available" id="available-balance">10,000.00 USDT</span>
+            </div>
+
+            <button class="orderform-submit buy" id="order-submit">Compra BTC</button>
+            <div class="orderform-fee">Tarifa: 0.1%</div>
+          </div>
+        </div>
+
+        <div class="panel markets-panel">
+          <div class="panel-header">
+            <span>Mercados</span>
+          </div>
+          <div class="market-tabs">
+            <button class="market-tab active" data-quote="all">Todos</button>
+            <button class="market-tab" data-quote="USDT">USDT</button>
+            <button class="market-tab" data-quote="BTC">BTC</button>
+            <button class="market-tab" data-quote="ETH">ETH</button>
+            <button class="market-tab" data-quote="BNB">BNB</button>
+          </div>
+          <div style="padding:8px;border-bottom:1px solid var(--border);">
+            <input type="text" id="market-search" placeholder="Buscar par..." style="width:100%;padding:6px 8px;background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-primary);font-size:12px;">
+          </div>
+          <div class="panel-content" id="markets-list"></div>
+          <div style="border-top:1px solid var(--border);">
+            <div class="panel-header" style="border-bottom:none;">
+              <span>Operaciones de mercado</span>
+            </div>
+            <div class="panel-content" id="recent-trades" style="max-height:200px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="trade-bottom">
+      <div class="bottom-tabs">
+        <button class="tab active" data-panel="panel-open-orders">Órdenes abiertas (<span id="open-orders-count">0</span>)</button>
+        <button class="tab" data-panel="panel-order-history">Historial de pedidos</button>
+        <button class="tab" data-panel="panel-trade-history">Historial comercial</button>
+        <button class="tab" data-panel="panel-portfolio">Valores en cartera</button>
+        <button class="tab" style="margin-left:auto;color:var(--accent-yellow);" id="cancel-all-orders">Cancelar todo</button>
+      </div>
+      <div class="bottom-content">
+        <div class="bottom-panel active" id="panel-open-orders">
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Par</th>
+                <th>Tipo</th>
+                <th>Lado</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Completado</th>
+                <th>Estado</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody id="open-orders-body">
+              <tr><td colspan="9" style="text-align:center;padding:24px;color:var(--text-muted);">No tienes pedidos abiertos.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="bottom-panel" id="panel-order-history">
+          <div class="panel-placeholder">Selecciona una pestaña para ver su contenido.</div>
+        </div>
+        <div class="bottom-panel" id="panel-trade-history">
+          <div class="panel-placeholder">Selecciona una pestaña para ver su contenido.</div>
+        </div>
+        <div class="bottom-panel" id="panel-portfolio">
+          <div class="panel-placeholder">Selecciona una pestaña para ver su contenido.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/socket.js"></script>
+  <script src="/js/chart.js"></script>
+  <script src="/js/orderbook.js"></script>
+  <script src="/js/orderform.js"></script>
+  <script src="/js/trade.js"></script>
+</body>
+</html>

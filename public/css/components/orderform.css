@@ -1,0 +1,178 @@
+.orderform-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.orderform-tabs .tab {
+  flex: 1;
+  padding: 8px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: none;
+  border-bottom: 2px solid transparent;
+}
+
+.orderform-tabs .tab:hover {
+  color: var(--text-primary);
+}
+
+.orderform-tabs .tab.active {
+  color: var(--accent-yellow);
+  border-bottom-color: var(--accent-yellow);
+}
+
+.orderform-content {
+  padding: 12px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.orderform-side-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.orderform-side-tabs .side-tab {
+  flex: 1;
+  padding: 8px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--radius);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+.orderform-side-tabs .side-tab.buy.active {
+  background: var(--accent-buy);
+  color: #fff;
+}
+
+.orderform-side-tabs .side-tab.sell.active {
+  background: var(--accent-sell);
+  color: #fff;
+}
+
+.orderform-group {
+  margin-bottom: 10px;
+}
+
+.orderform-group label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.orderform-group .input-wrapper {
+  display: flex;
+  align-items: center;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.orderform-group .input-wrapper:focus-within {
+  border-color: var(--accent-yellow);
+}
+
+.orderform-group .input-wrapper input {
+  flex: 1;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-family: var(--font-mono);
+}
+
+.orderform-group .input-wrapper input::placeholder {
+  color: var(--text-muted);
+}
+
+.orderform-group .input-wrapper .unit {
+  padding: 0 12px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.orderform-slider {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.orderform-slider button {
+  flex: 1;
+  padding: 4px;
+  font-size: 11px;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border-radius: 2px;
+}
+
+.orderform-slider button:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.orderform-slider button.active {
+  background: var(--accent-yellow);
+  color: var(--bg-primary);
+}
+
+.orderform-balance {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.orderform-balance .available {
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+}
+
+.orderform-submit {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: var(--radius);
+  margin-top: 8px;
+}
+
+.orderform-submit.buy {
+  background: var(--accent-buy);
+  color: #fff;
+}
+
+.orderform-submit.sell {
+  background: var(--accent-sell);
+  color: #fff;
+}
+
+.orderform-submit:hover {
+  opacity: 0.9;
+}
+
+.orderform-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.orderform-fee {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 8px;
+}
